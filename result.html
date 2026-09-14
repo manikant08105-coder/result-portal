@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marksheet</title>
+<style> 
+body{
+margin:0;
+padding:20px;
+background:#f5f5f5;
+font-family:"Poppins",sans-serif;
+}
+
+.container{
+width:650px;
+margin:20px auto;
+background:#90E0EF;
+padding:30px;
+border-radius:10px;
+box-shadow:0 0 15px rgba(0,0,0,.2);
+}
+
+.search-box{
+text-align:center;
+}
+
+.search-box input{
+width:220px;
+padding:12px;
+margin:5px;
+border:1px solid #999;
+border-radius:5px;
+}
+
+.search-box button{
+padding:12px 30px;
+background:#003366;
+color:#fff;
+border:none;
+border-radius:5px;
+cursor:pointer;
+}
+
+.search-box button:hover{
+background:#00509E;
+}
+
+.marksheet{
+width:800px;
+margin:30px auto;
+background:#E9EDC9;
+border:3px solid #000;
+padding:25px;
+position:relative;
+overflow:hidden;
+box-shadow:0 0 15px rgba(0,0,0,.3);
+}
+
+.marksheet::before{
+content:"";
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+width:350px;
+height:350px;
+background:url("https://i.ibb.co/DcBXZNb/file-000000009c2461f7891f3805ab8894a3-2.png") center no-repeat;
+background-size:contain;
+opacity:.15;
+z-index:0;
+}
+
+.marksheet *{
+position:relative;
+z-index:1;
+}
+
+.school{
+text-align:center;
+border-bottom:2px solid #000;
+padding-bottom:10px;
+}
+
+.school h1{
+margin:0;
+color:#003366;
+}
+
+.school h2{
+margin:5px 0;
+}
+
+.exam-title{
+margin-top:10px;
+}
+
+.info{
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
+}
+
+.info td{
+padding:8px;
+border:1px solid #000;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
+}
+
+table,th,td{
+border:1px solid #000;
+}
+
+th{
+background:#d9d9d9;
+}
+
+th,td{
+padding:8px;
+text-align:center;
+}
+
+.footer{
+display:flex;
+justify-content:space-between;
+margin-top:40px;
+font-weight:bold;
+}
+
+#downloadBtn{
+padding:12px 30px;
+background:#198754;
+color:#fff;
+border:none;
+border-radius:5px;
+cursor:pointer;
+}
+
+#downloadBtn:hover{
+background:#157347;
+}
+
+@media print{
+
+body{
+margin:0;
+padding:0;
+background:#fff !important;
+-webkit-print-color-adjust:exact;
+print-color-adjust:exact;
+}
+
+.container{
+display:none !important;
+}
+
+#downloadBtn{
+display:none !important;
+}
+
+.marksheet{
+display:block !important;
+width:100%;
+margin:0;
+border:3px solid #000;
+box-shadow:none;
+background:#E9EDC9 !important;
+-webkit-print-color-adjust:exact;
+print-color-adjust:exact;
+}
+
+.marksheet::before{
+opacity:.15 !important;
+}
+
+}
+</style>
+<div class="container">
+
+<div class="search-box">
+
+<h2>THE GLOBAL PUBLIC SCHOOL</h2>
+<h3>Online Result Portal</h3>
+
+<input
+type="number"
+id="roll"
+placeholder="Enter Roll Number">
+
+<input
+type="number"
+id="reg"
+placeholder="Enter Registration Number">
+
+<button onclick="getResult()">Show Result</button>
+
+</div>
+
+</div>
+
+
+<div class="marksheet" id="marksheet" style="display:none;">
+
+<div class="school">
+<h1>THE GLOBAL PUBLIC SCHOOL</h1>
+<p>NAIKA ROAD DANIYAWAN (PATNA)</p>
+
+<h2>MARKSHEET</h2>
+
+<h3 class="exam-title">
+<p>SA Exam - Summative Assessment Examination</p>
+<br>
+<span>Session : 2026-27</span>
+</h3>
+
+</div>
+
+<table class="info">
+
+<tr>
+<td><b>Student Name :</b> <span id="name"></span></td>
+<td><b>Roll No :</b> <span id="rollno"></span></td>
+</tr>
+
+<tr>
+<td><b>Father Name :</b> <span id="father"></span></td>
+<td><b>Registration No :</b> <span id="regno"></span></td>
+</tr>
+
+<tr>
+<td><b>Mother Name :</b> <span id="mother"></span></td>
+<td><b>Class :</b> <span id="class"></span></td>
+</tr>
+
+</table>
+
+
+<table>
+
+<tr>
+<th>Subject</th>
+<th>Marks</th>
+</tr>
+
+<tr>
+<td>English</td>
+<td id="english"></td>
+</tr>
+
+<tr>
+<td>Hindi</td>
+<td id="hindi"></td>
+</tr>
+
+<tr>
+<td>Math</td>
+<td id="math"></td>
+</tr>
+
+<tr>
+<td>Science</td>
+<td id="science"></td>
+</tr>
+
+<tr>
+<td>Social Science</td>
+<td id="sst"></td>
+</tr>
+
+<tr>
+<td>Computer or DRAWING </td>
+<td id="computer"></td>
+</tr>
+
+<tr>
+<td>General Knowledge (GK)</td>
+<td id="gk"></td>
+</tr>
+
+<tr>
+<th>Total</th>
+<th id="total"></th>
+</tr>
+
+<tr>
+<th>Percentage</th>
+<th id="percentage"></th>
+</tr>
+
+<tr>
+<th>Grade</th>
+<th id="grade"></th>
+</tr>
+
+<tr>
+<th>Result</th>
+<th id="result"></th>
+</tr>
+
+</table>
+
+
+<div class="footer">
+<p><strong>Principal</strong></p>
+<p>Avinash Kumar Singh</p>
+
+</div>
+
+</div>
+
+
+<div style="text-align:center;margin-top:20px;">
+
+<button id="downloadBtn" onclick="downloadPDF()" style="display:none;">
+Download PDF
+</button>
+
+</p>
+
+<p>
+
+<script>
+function getResult() {
+
+let roll = document.getElementById("roll").value.trim();
+let reg = document.getElementById("reg").value.trim();
+
+if (roll === "" || reg === "") {
+alert("Please Enter Roll Number and Registration Number");
+return;
+}
+
+google.script.run
+.withSuccessHandler(showResult)
+.getResult(roll, reg);
+}
+
+function showResult(data) {
+
+if (data.status === "error") {
+
+alert("Result Not Found");
+
+document.getElementById("marksheet").style.display = "none";
+document.getElementById("downloadBtn").style.display = "none";
+document.querySelector(".container").style.display = "block";
+
+return;
+}
+
+document.querySelector(".container").style.display = "none";
+
+document.getElementById("marksheet").style.display = "block";
+document.getElementById("downloadBtn").style.display = "inline-block";
+
+document.getElementById("name").textContent = data.name;
+document.getElementById("father").textContent = data.father;
+document.getElementById("mother").textContent = data.mother;
+document.getElementById("class").textContent = data.class;
+
+document.getElementById("rollno").textContent = data.roll;
+document.getElementById("regno").textContent = data.reg;
+
+document.getElementById("english").textContent = data.english;
+document.getElementById("hindi").textContent = data.hindi;
+document.getElementById("math").textContent = data.math;
+document.getElementById("science").textContent = data.science;
+document.getElementById("sst").textContent = data.sst;
+document.getElementById("computer").textContent = data.computer;
+document.getElementById("gk").textContent = data.gk;
+
+document.getElementById("total").textContent = data.total;
+document.getElementById("percentage").textContent = data.percentage;
+document.getElementById("grade").textContent = data.grade;
+document.getElementById("result").textContent = data.result;
+
+document.getElementById("classTeacher").textContent = data.classTeacher;
+  }
+
+function downloadPDF() {
+
+document.getElementById("downloadBtn").style.display = "none";
+
+window.print();
+
+setTimeout(function () {
+document.getElementById("downloadBtn").style.display = "inline-block";
+ }, 1000);
+
+}
+</script>
+</body>
+  </html>
